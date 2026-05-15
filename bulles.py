@@ -1,2 +1,3 @@
 def bulles(liste):
-    pass
+    liste.append("🫧")
+    return liste
