@@ -1,6 +1,5 @@
 import tkinter as tk
 import random
-from os import rename
 
 import bulles, insertion, selection
 
