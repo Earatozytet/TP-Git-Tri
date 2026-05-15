@@ -1,0 +1,2 @@
+def insertion(liste):
+    pass

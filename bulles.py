@@ -1,0 +1,2 @@
+def bulles(liste):
+    pass

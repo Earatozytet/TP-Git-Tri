@@ -1,0 +1,2 @@
+def selection(liste):
+    pass
