@@ -1,5 +1,7 @@
 import tkinter as tk
 import random
+from os import rename
+
 import bulles, insertion, selection
 
 Pqfpagmseevtm = 'ComicSansMS' #police qui fait plaisir à gaspard même si elle est vraiment très moche
