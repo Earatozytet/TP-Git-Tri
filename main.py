@@ -18,13 +18,19 @@ def lancer_tri():
         resultat.config(foreground="#f5bf00", state="disabled")
 
     else :
-        liste_nombres = [float(i) for i in entree.get("1.0",'end-1c').split(",")]
-        algo_utiliser = algo.get()
-        liste_triee = dico_methode[algo_utiliser](liste_nombres)
-        resultat.config(state="normal",foreground=entree.cget("foreground"))
-        resultat.delete("1.0", "end")
-        resultat.insert("1.0", ", ".join(str(element) for element in liste_triee))
-        resultat.config(state="disabled")
+        try :
+            liste_nombres = [float(i) for i in entree.get("1.0",'end-1c').split(",")]
+            algo_utiliser = algo.get()
+            liste_triee = dico_methode[algo_utiliser](liste_nombres)
+            resultat.config(state="normal",foreground=entree.cget("foreground"))
+            resultat.delete("1.0", "end")
+            resultat.insert("1.0", ", ".join(str(element) for element in liste_triee))
+            resultat.config(state="disabled")
+        except:
+            resultat.config(state="normal")
+            resultat.delete("1.0", "end")
+            resultat.insert("1.0", "Liste invalide")
+            resultat.config(foreground="#e50000", state="disabled")
 
 def is_entry_valid(entry, negatif_ok = True):
     """
@@ -48,13 +54,17 @@ def generer_liste():
         mini = int(min_element.get()) if min_element.get() != "" else 0
         maxi = int(max_element.get()) if max_element.get() != "" else 1
 
-    if type_element.get() == "float":
-        liste = [random.uniform(mini,maxi) for i in range(nb)]
-    else:
-        liste = [random.randint(mini, maxi) for i in range(nb)]
+    if mini <maxi or nb <= 0:
+        if type_element.get() == "float":
+            liste = [random.uniform(mini,maxi) for i in range(nb)]
+        else:
+            liste = [random.randint(mini, maxi) for i in range(nb)]
 
+            entree.delete("1.0", "end")
+            entree.insert("1.0", ", ".join(str(element) for element in liste))
+    else :
         entree.delete("1.0", "end")
-        entree.insert("1.0", ", ".join(str(element) for element in liste))
+        entree.insert("1.0", "argument invalides")
 
 # création fenêtre
 root = tk.Tk()
