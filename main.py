@@ -2,6 +2,9 @@ import tkinter as tk
 import random
 import bulles, insertion, selection
 
+# import re
+# PATTERN = r"^-?\d*\.?\d*$" # NE PAS MODIFIER
+
 Pqfpagmseevtm = 'ComicSansMS' #police qui fait plaisir à gaspard même si elle est vraiment très moche
 dico_methode = {
     "Tri à bulle" : bulles.bulles,
@@ -16,7 +19,6 @@ def lancer_tri():
         resultat.delete("1.0", "end")
         resultat.insert("1.0", "Liste vides")
         resultat.config(foreground="red", state="disabled")
-
     else :
         liste_nombres = [float(i) for i in entree.get("1.0",'end-1c').split(",")]
         algo_utiliser = algo.get()
@@ -26,18 +28,35 @@ def lancer_tri():
         resultat.insert("1.0", ", ".join(str(element) for element in liste_triee))
         resultat.config(state="disabled")
 
+def is_entry_valid(entry, negatif_ok = True):
+    """
+    Vérifie si la chaine de caractère entry est composé uniquement de chiffres et éventuellement d'un '-'
+    au début si negatif_ok est égal à True
+
+    Keyword arguments:
+    entry -- str, la chaine pour laquelle il faut vérifier si c'est une chaine composé de chiffres
+    negatif_ok -- bool, indique s'il faut autoriser les '-' au début de la chaine (default True)
+    """
+    return len([e for index, e in enumerate(entry) if not e.isdigit() and not (negatif_ok and index==0 and e=="-")]) == 0
+
 def generer_liste():
-    nb = int(nb_element.get()) if nb_element.get() != "" else 1
-    mini = int(min_element.get()) if min_element.get() != "" else 0
-    maxi = int(max_element.get()) if max_element.get() != "" else 1
+    # if re.match(PATTERN, nb_element.get()) is not None and \
+    #     re.match(PATTERN, min_element.get()) is not None and \
+    #     re.match(PATTERN, max_element.get()) is not None:
+    if (is_entry_valid(nb_element.get().strip(), negatif_ok=False) and
+            is_entry_valid(min_element.get().strip()) and
+            is_entry_valid(max_element.get().strip())):
+        nb = int(nb_element.get()) if nb_element.get() != "" else 2
+        mini = int(min_element.get()) if min_element.get() != "" else 0
+        maxi = int(max_element.get()) if max_element.get() != "" else 1
 
-    if type_element.get() == "float":
-        liste = [random.random() for i in range(nb)]
-    else:
-        liste = [random.randint(mini, maxi) for i in range(nb)]
+        if type_element.get() == "float":
+            liste = [random.random() for i in range(nb)]
+        else:
+            liste = [random.randint(mini, maxi) for i in range(nb)]
 
-    entree.delete("1.0", "end")
-    entree.insert("1.0", ", ".join(str(element) for element in liste))
+        entree.delete("1.0", "end")
+        entree.insert("1.0", ", ".join(str(element) for element in liste))
 
 # création fenêtre
 root = tk.Tk()
