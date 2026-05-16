@@ -72,7 +72,7 @@ def generer_liste():
 
 # création fenêtre
 root = tk.Tk()
-root.geometry("300x600")
+root.geometry("300x632")
 root.title("Algorithmes de tri de NSI")
 
 frame1 = tk.Frame(root)
