@@ -1,6 +1,5 @@
 import tkinter as tk
 import random
-
 import bulles, insertion, selection
 
 Pqfpagmseevtm = 'ComicSansMS' #police qui fait plaisir à gaspard même si elle est vraiment très moche
@@ -13,12 +12,19 @@ def lancer_tri():
     """fonction qui lance le tri grace aux fonctions codé"""
     print("Tri lancé")
     if not entree.get("1.0",'end-1c') :
-        resulta.config(text="liste vide", fg = "red")
+        resulta.config(state="normal")
+        resulta.delete("1.0", "end")
+        resulta.insert("1.0", "Liste vides")
+        resulta.config(foreground="red", state="disabled")
+
     else :
         liste_nombres = [float(i) for i in entree.get("1.0",'end-1c').split(",")]
         algo_utiliser = algo.get()
         liste_triee = dico_methode[algo_utiliser](liste_nombres)
-        resulta.config(text=liste_triee, fg = "black")
+        resulta.config(state="normal",foreground=entree.cget("foreground"))
+        resulta.delete("1.0", "end")
+        resulta.insert("1.0", ", ".join(str(element) for element in liste_triee))
+        resulta.config(state="disabled")
 
 def generer_liste():
     nb = int(nb_element.get()) if nb_element.get() != "" else 1
@@ -66,7 +72,7 @@ bouton_random = tk.Button(frame1,text="Générer",font=Pqfpagmseevtm,command=gen
 bouton_random.grid(row=3, column=0, columnspan=5)
 
 
-tk.Label(root, text="Liste à trier :", font=Pqfpagmseevtm).pack()
+tk.Label(root, text="Liste à trier                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           :", font=Pqfpagmseevtm).pack()
 entree = tk.Text(root,width=25,height=8,bd=1,relief="solid", highlightthickness=0,font=Pqfpagmseevtm)
 entree.pack()
 
@@ -82,8 +88,8 @@ menu_des_algo.pack(side="left")
 
 bouton_tri = tk.Button(frame2,text="Trier",bg="#0992E6",fg="white",command=lancer_tri,font=Pqfpagmseevtm,)
 bouton_tri.pack(side="left")
-
-resulta = tk.Label(root, width=25,height=8, bd=1,relief="solid", font=Pqfpagmseevtm, anchor="nw")
+resulta = tk.Text(root,width=25,height=8,bd=1,relief="solid",highlightthickness=0,font=Pqfpagmseevtm,)
+resulta.config(state="disabled")
 resulta.pack()
 
 root.mainloop()
