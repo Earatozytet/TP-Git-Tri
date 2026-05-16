@@ -54,20 +54,22 @@ def generer_liste():
     #if (is_entry_valid(nb_element.get().strip(), negatif_ok=False) and
     #        is_entry_valid(min_element.get().strip()) and
     #        is_entry_valid(max_element.get().strip())):
-    nb = int(nb_element.get()) if nb_element.get() != "" else 2
+    nb = int(nb_element.get()) if nb_element.get() != "" else 0
     mini = int(min_element.get()) if min_element.get() != "" else 0
-    maxi = int(max_element.get()) if max_element.get() != "" else 1
+    maxi = int(max_element.get()) if max_element.get() != "" else 0
 
-    if mini < maxi and nb > 0:
+    if (mini < maxi and nb > 0):
         if type_element.get() == "float":
             liste = [random.uniform(mini,maxi) for i in range(nb)]
         else:
             liste = [random.randint(mini, maxi) for i in range(nb)]
 
         entree.delete("1.0", "end")
+        entree.config(foreground="black")
         entree.insert("1.0", ", ".join(str(element) for element in liste))
     else :
         entree.delete("1.0", "end")
+        entree.config(foreground="#e50000")
         entree.insert("1.0", "argument invalides")
 
 # création fenêtre
