@@ -15,24 +15,35 @@ def lancer_tri():
         resultat.config(state="normal")
         resultat.delete("1.0", "end")
         resultat.insert("1.0", "Liste vides")
-        resultat.config(foreground="red", state="disabled")
+        resultat.config(foreground="#f5bf00", state="disabled")
 
     else :
-        liste_nombres = [float(i) for i in entree.get("1.0",'end-1c').split(",")]
-        algo_utiliser = algo.get()
-        liste_triee = dico_methode[algo_utiliser](liste_nombres)
-        resultat.config(state="normal",foreground=entree.cget("foreground"))
-        resultat.delete("1.0", "end")
-        resultat.insert("1.0", ", ".join(str(element) for element in liste_triee))
-        resultat.config(state="disabled")
+        try : # Utiliser un try va faire en sorte que le programme ne tente pas d’exécuter le code ci-dessous.
+            liste_nombres = [float(i) for i in entree.get("1.0",'end-1c').split(",")]
+            algo_utiliser = algo.get()
+            liste_triee = dico_methode[algo_utiliser](liste_nombres)
+            resultat.config(state="normal",foreground=entree.cget("foreground"))
+            resultat.delete("1.0", "end")
+            resultat.insert("1.0", ", ".join(str(element) for element in liste_triee))
+            resultat.config(state="disabled")
+        except : # Si il y a une erreur à la place de exécuter le  bloc dans le try, il va faire celui de dessou à la place.
+                 # Utiliser un try et except évite de faire plusieurs tests.
+                 # Et c'est moi qui ai fait le code, donc je fais ce que je veux 🤬
+            resultat.config(state="normal")
+            resultat.delete("1.0", "end")
+            resultat.insert("1.0", "liste invalide")
+            resultat.config(foreground="#f60000", state="disabled")
 
 def generer_liste():
+    """
+    fonction génère un miste de monde aléatoire
+    """
     nb = int(nb_element.get()) if nb_element.get() != "" else 1
     mini = int(min_element.get()) if min_element.get() != "" else 0
     maxi = int(max_element.get()) if max_element.get() != "" else 1
 
     if type_element.get() == "float":
-        liste = [random.random() for i in range(nb)]
+        liste = [random.uniform(mini,maxi) for i in range(nb)]
     else:
         liste = [random.randint(mini, maxi) for i in range(nb)]
 
