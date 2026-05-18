@@ -5,6 +5,6 @@ def insertion(liste):
         while j > 0 and liste[j - 1] > x:
             liste[j] = liste[j - 1]
             j = j - 1
-            liste[j] = x
+            liste[j] = i ################################################################################
     return liste
 
