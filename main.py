@@ -30,7 +30,7 @@ def lancer_tri():
             resultat.delete("1.0", "end")
             resultat.insert("1.0", ", ".join(str(element) for element in liste_triee))
             resultat.config(state="disabled")
-            affichage_temps.config(text=f"Temps d'execition : {round(temps,10)} s")
+            affichage_temps.config(text=f"Temps d'exécution : {round(temps,10)} s")
         except:
             resultat.config(state="normal")
             resultat.delete("1.0", "end")
