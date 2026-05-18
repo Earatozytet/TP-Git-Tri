@@ -2,7 +2,7 @@ import tkinter as tk
 import random
 import bulles, insertion, selection
 
-Pqfpagmseevtm = 'ComicSansMS' #police qui fait plaisir à gaspard même si elle est vraiment très moche
+Pqfpagmseevtm = ('Comic Sans MS', 12) #police qui fait plaisir à gaspard même si elle est vraiment très moche
 dico_methode = {
     "Tri à bulle" : bulles.bulles,
     "Tri par insertion " : insertion.insertion,
