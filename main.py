@@ -1,5 +1,5 @@
 import tkinter as tk
-import random
+import random, time
 import bulles, insertion, selection
 
 Pqfpagmseevtm = ('Comic Sans MS', 12) #police qui fait plaisir à gaspard même si elle est vraiment très moche
@@ -11,6 +11,7 @@ dico_methode = {
 def lancer_tri():
     """fonction qui lance le tri grace aux fonctions codé"""
     print("Tri lancé")
+
     if not entree.get("1.0",'end-1c') :
         resultat.config(state="normal")
         resultat.delete("1.0", "end")
@@ -21,11 +22,14 @@ def lancer_tri():
         try :
             liste_nombres = [float(i) for i in entree.get("1.0",'end-1c').split(",")]
             algo_utiliser = algo.get()
+            start = time.time()
             liste_triee = dico_methode[algo_utiliser](liste_nombres)
+            temps = time.time() - start
             resultat.config(state="normal",foreground=entree.cget("foreground"))
             resultat.delete("1.0", "end")
             resultat.insert("1.0", ", ".join(str(element) for element in liste_triee))
             resultat.config(state="disabled")
+            affichage_temps.config(text=f"Temps d'execition : {round(temps,10)} s")
         except:
             resultat.config(state="normal")
             resultat.delete("1.0", "end")
@@ -47,23 +51,25 @@ def generer_liste():
     # if re.match(PATTERN, nb_element.get()) is not None and \
     #     re.match(PATTERN, min_element.get()) is not None and \
     #     re.match(PATTERN, max_element.get()) is not None:
-    if (is_entry_valid(nb_element.get().strip(), negatif_ok=False) and
-            is_entry_valid(min_element.get().strip()) and
-            is_entry_valid(max_element.get().strip())):
-        nb = int(nb_element.get()) if nb_element.get() != "" else 2
-        mini = int(min_element.get()) if min_element.get() != "" else 0
-        maxi = int(max_element.get()) if max_element.get() != "" else 1
+    #if (is_entry_valid(nb_element.get().strip(), negatif_ok=False) and
+    #        is_entry_valid(min_element.get().strip()) and
+    #        is_entry_valid(max_element.get().strip())):
+    nb = int(nb_element.get()) if nb_element.get() != "" else 0
+    mini = int(min_element.get()) if min_element.get() != "" else 0
+    maxi = int(max_element.get()) if max_element.get() != "" else 0
 
-    if mini <maxi or nb <= 0:
+    if (mini < maxi and nb > 0):
         if type_element.get() == "float":
             liste = [random.uniform(mini,maxi) for i in range(nb)]
         else:
             liste = [random.randint(mini, maxi) for i in range(nb)]
 
-            entree.delete("1.0", "end")
-            entree.insert("1.0", ", ".join(str(element) for element in liste))
+        entree.delete("1.0", "end")
+        entree.config(foreground="black")
+        entree.insert("1.0", ", ".join(str(element) for element in liste))
     else :
         entree.delete("1.0", "end")
+        entree.config(foreground="#e50000")
         entree.insert("1.0", "argument invalides")
 
 # création fenêtre
@@ -119,4 +125,7 @@ resultat = tk.Text(root,width=25,height=8,bd=1,relief="solid",highlightthickness
 resultat.config(state="disabled")
 resultat.pack()
 
+
+affichage_temps = tk.Label(root, text="", font=Pqfpagmseevtm)
+affichage_temps.pack()
 root.mainloop()
